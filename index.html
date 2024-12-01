@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Boosting Instance Understanding via Explicit Visual Prompt Instruction Tuning">
+  <meta name="keywords" content="Inst-IT">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inst-IT</title>
+
+  <link rel="icon" style="width: auto; height: 100%;" href="images/logo.png">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/leaderboard.css">
+  <link rel="stylesheet" href="./static/css/open-image.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="text/javascript" src="./static/js/sort-table.js" defer></script>
+  <script src="./static/js/fontawesome.all.min.js" defer></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/explorer-index.js"></script>
+  <script src="./static/js/question_card.js"></script>
+  <script src="./static/js/leaderboard_testmini.js"></script>  
+  <script src="./static/js/open-image.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KG8M4HGV0Y"></script>
+  <!-- MathJax -->
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+</head>
+
+
+<body>
+
+<!-- Related researchs -->
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+      <div class="navbar-dropdown">
+        <a class="navbar-item" href="https://github.com/wjpoom/SPEC">
+          <b><img src="images/github.jpg" style="width:1.20em; vertical-align: middle" alt="Logo"/> SPEC</b>
+        </a>
+        <a class="navbar-item" href="https://deepstack-vl.github.io/">
+          <b><img src="images/deepstack.png" style="width:1.20em; vertical-align: middle;" alt="Logo"/> DeepStack</b>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Autohrs and Buttons-->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            <span class="small-caps"><img id="logo" width="6%" src="images/logo.png"> Inst-IT: </span>
+            <div style="margin-top: 0.3em;">Boosting Instance Understanding via Explicit Visual Prompt Instruction Tuning</div>
+          </h1>
+          <font size="5"><span style="color: red; font-weight: bold;">Arxiv 2024</span></font>
+          <div class="is-size-5 publication-authors">
+            <br>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=GTuWk9YAAAAJ&hl=zh-CN" style="font-weight:normal;">Wujian Peng<b><sup>1,2*</sup></b></a>,
+            </span>
+            <span class="author-block">
+              <a href="https://menglcool.github.io/" style="font-weight:normal;">Lingchen Meng<b><sup>1*</sup></b></a>,
+            </span>
+            <span class="author-block">
+              Yitong Chen<sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              Yiweng Xie<sup>1</sup>,
+            </span>
+            <span class="author-block">
+              Yang Liu<sup>1</sup>,
+            </span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://guitaowufeng.github.io/" style="font-weight:normal;">Tao Gui<sup>1</sup></a>,
+            </span>
+            <span class="author-block">
+              <a href="https://xuhangcn.github.io/" style="font-weight:normal;">Hang Xu<sup>3</sup></a>,
+            </span>
+            <span class="author-block">
+              <a href="https://xpqiu.github.io/en.html" style="font-weight:normal;">Xipeng Qiu<sup>1,2</sup></a>,
+            </span>
+            <span class="author-block">
+              <a href="https://zxwu.azurewebsites.net/" style="font-weight:normal;">Zuxuan Wu<b><sup>1,2&dagger;</sup></b></a>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=f3_FP8AAAAAJ&hl=en" style="font-weight:normal;">Yu-Gang Jiang<sup>1</sup></a>
+            </span>
+          </div>
+          
+          <br>
+          <div class="is-size-5 publication-authors">
+            <sup>1</sup> School of Computer Science, Fudan University</span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <sup>2 </sup> Shanghai Innovation Institute</span>
+            <sup>3 </sup> Huawei Noah’s Ark Lab</span>
+          </div>
+          
+          <div class="is-size-6 publication-authors">
+            <br>
+            <span class="author-block"><b>*</b> Equal contributions</span>
+            <span class="author-block"><b>&dagger;</b> Corresponding author</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="#"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/inst-it/inst-it" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <img src="images/hf.png" alt="description of image" style="max-width:80%; height:auto;">
+                  </span>
+                  <span>Checkpoints</span>
+                </a>
+              </span>
+              <!-- <span class="link-block">
+                <a href="" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <img src="images/hf.png" alt="description of image" style="max-width:80%; height:auto;">
+                  </span>
+                  <span>Demo</span>
+                </a>
+              </span> -->
+              <span class="link-block">
+                <a href="#"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <p style="font-size:18px">
+                        <img src="images/hf.png" alt="description of image" style="max-width:80%; height:auto;">
+                      </p>
+                  </span>
+                  <span><span class="small-caps">Inst-IT</span> Bench</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <img src="images/hf.png" alt="description of image" style="max-width:80%; height:auto;">
+                  </span>
+                  <span><span class="small-caps">Inst-IT</span> Dataset</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <p style="font-size:18px">
+                        <img src="images/leaderboard.png" alt="description of image" style="max-width:80%; height:auto;">
+                      </p>
+                  </span>
+                  <span>Leaderboard</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Abstract -->
+<section class="section" id="Abstract">
+  <div class="container" style="margin-bottom: 2vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Large Multimodal Models (<span class="small-caps">LMMs</span>) have made significant breakthroughs with the advancement of instruction tuning.
+            <i><b>However, while existing models can understand images and videos at a holistic level, they still struggle with instance-level understanding that requires a more nuanced comprehension and alignment.</b></i>
+            Instance-level understanding is crucial, as it focuses on the specific elements that we are most interested in.
+            Excitingly, existing works find that the <span class="small-caps">SOTA</span> <span class="small-caps">LMMs</span> exhibit strong instance understanding capabilities when provided with explicit visual cues.
+            Motivated by this, we introduce an automated annotation pipeline assisted by <span class="small-caps">GPT-4o</span> to extract instance-level information from images and videos through explicit visual prompting for instance guidance.
+          </p>
+          <p>Building upon this pipeline, we proposed <span class="small-caps">Inst-IT</span>, a solution to enhance <span class="small-caps">LMMs'</span> 
+            <span class="uline-bold">Inst</span>ance understanding via explicit visual prompt 
+            <span class="uline-bold">I</span>nstruction <span class="uline-bold">T</span>uning.
+            <span class="small-caps"><b>Inst-IT</b></span> consists of 
+            <i><b>a benchmark</b></i> to diagnose multimodal instance-level understanding, 
+            <i><b>a large-scale instruction-tuning dataset</b></i>, and 
+            <i><b>a continuous instruction-tuning training paradigm</b></i> to effectively enhance spatial-temporal instance understanding capabilities of existing <span class="small-caps">LMMs</span>.
+          </p>  
+          <p>Experimental results show that our models not only achieve outstanding performance on <span class="small-caps">Inst-IT</span> Bench but also demonstrate significant improvements on other generic image and video understanding benchmarks, such as AI2D and Egoschema.
+            This highlights that our dataset not only boosts instance-level understanding but also strengthens the overall capabilities of generic image and video comprehension.
+          </p>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teaser -->
+<div style="background-color: #f0f0f0; width: 100%; padding: 1em 0; text-align: center;">
+  <h2 class="title is-3">
+    <img src="images/logo.png" style="width:1.2em; vertical-align: middle" alt="Logo"/>
+    <span class="mathvista" style="vertical-align: middle">
+      Multimodal Instance Understanding
+    </span>
+  </h2>
+</div>
+<section class="section" id="Teaser">
+  <div class="container" style="margin-bottom: 2vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <img src="images/teaser.png" style="width:40%; vertical-align: middle" alt="Teaser"/>
+        <div class="content has-text-justified" style="padding-top: 5%;">
+        <p>
+          Large Multimodal Models (LMMs) have made remarkable advancements, <b>but they still face challenges in grasping instance-specific details</b>, hindering their ability to achieve fine-grained understanding.
+          Instance-level understanding involves identifying the attributes of individual instances and their relationships, which is essential for real-world tasks where users focus on <b>Instances-of-Interest</b>. 
+        </p>
+        <p>
+          In this work, we aim to advance the <b>multimodal instance understanding in both images and videos</b>. Our contributions are:
+          <ol>
+            <li style="margin-bottom: 0.5em">
+              <a href="#pipeline"><b>An instance-centric annotation pipeline: </b></a>
+              We propose an automated pipeline, assisted by GPT-4o, to generate fine-grained annotations for both images and videos, with a particular focus on Instances of Interest.
+            </li>
+            <li style="margin-bottom: 0.5em">
+              <a href="#benchmark"><b>An instance-specific understanding benchmark: </b></a>
+              We present <span class="small-caps">Inst-IT</span> Bench, a benchmark designed to evaluate instance-level understanding in multimodal models, and perform extensive evaluations on it.
+            </li>
+            <li style="margin-bottom: 0.5em">
+              <a href="#dataset"><b>An instance-grounded instruction tuning dataset: </b></a>
+              We introduce <span class="small-caps">Inst-IT</span> Dataset, the first dataset for instruction tuning that features explicit instance-level visual prompts and corresponding fine-grained textual annotations.
+            </li>
+            <li style="margin-bottom: 0.5em">
+              <a href="#train"><b>An instance-enhanced Large Multimodal Model: </b></a>
+              We integrate <span class="small-caps">Inst-IT</span> Dataset into the tuning of LMMs and propose a continuous instruction-tuning approach. This method enhances spatial-temporal instance understanding while improving general comprehension.
+            </li>
+          </ol>
+          
+        </p>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pipeline -->
+<div style="background-color: #f0f0f0; width: 100%; padding: 1em 0; text-align: center;">
+  <h2 class="title is-3">
+    <img src="images/pipeline.png" style="width:1.2em; vertical-align: middle" alt="pipeline"/>
+    <span class="mathvista" style="vertical-align: middle" id="pipeline">Inst-IT: An Instance-centric Data Annotation Pipeline<span>
+  </h2>
+</div>
+<section class="section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <img src="images/arch.png" style="width:40%; vertical-align: middle" alt="Logo"/>
+        <div class="content has-text-justified">
+          We process the video frames sequentially. At each timestamp \(t\), GPT-4o is prompted to create a frame-level annotation \(Y_t^f\) based on the current frame \(X_t\) and the previous frame \(X_{t\text{-}1}\). 
+          Then, all the frame-level annotations are aggregated to produce a video-level description \(Y^{vid}\) and create a set of open-ended question-answer pairs \(Y^{qa}\).
+          Below is an annotated example, and you can see a full sample at <a href="#dataset-example">here</a>.
+        </div>
+        <img src="images/data.png" style="width:80%; vertical-align: middle" alt="Logo"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Benchmark -->
+<div style="background-color: #f0f0f0; width: 100%; padding: 1em 0; text-align: center;">
+  <h2 class="title is-3">
+    <img src="images/benchmark.png" style="width:1.2em; vertical-align: middle" alt="Logo"/>
+    <span class="mathvista" style="vertical-align: middle" id="benchmark"> Inst-IT Bench: An Instance Understanding Benchmark<span>
+  </h2>
+</div>
+<section class="section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          Existing multimodal benchmarks primarily focus on global understanding, failing to provide more in-depth insights into the instance-level comprehension capability of models. 
+          Specifically, <span class="small-caps">Inst-IT</span> Bench includes two parts: image-split and video-split, and is able to evaluate the models' ability in understanding instances in both images and videos. 
+          The image-split contains <b>1,000 QA pairs for 338 images</b>, while the video-split contains <b>1,000 QA pairs for 206 videos</b>. 
+          Each QA pair is available in both <b>open-ended</b> and <b>multiple-choices</b> formats.
+        </div>
+      <!-- benchmark examples -->
+        <h3 class="title is-4">Data Examples in <span class="small-caps">Inst-IT</span> Bench</h3>
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="box m-5">
+            <div class="content has-text-centered">
+              <img src="images/web_bench_exp1.png" alt="benchmark example" width="80%"/>
+              <div>
+                <i><b>Note: </b>We use the format [ID] to refer to instances, and the format &lt;timestamp&gt; to refer to time.</i> 
+              </div>
+            </div>
+          </div>
+          <div class="box m-5">
+            <div class="content has-text-centered">
+              <img src="images/web_bench_exp2.png" alt="benchmark example" width="80%"/>
+              <div>
+                <i><b>Note: </b>We use the format [ID] to refer to instances, and the format &lt;timestamp&gt; to refer to time.</i> 
+              </div>
+            </div>
+          </div>
+          <div class="box m-5">
+          <div class="content has-text-centered">
+            <img src="images/web_bench_exp3.png" alt="benchmark example" width="80%"/>
+            <div>
+              <i><b>Note: </b>We use the format [ID] to refer to instances, and the format &lt;timestamp&gt; to refer to time.</i> 
+            </div>
+          </div>
+          </div>
+        </div>
+          <!-- LMMs results on Inst-IT bench -->
+        <div class="content has-text-justified">
+          <h3 class="title is-4" style="text-align: center;"><br>Evaluating LMMs on <span class="small-caps">Inst-IT</span> Bench</h3>
+          <div  class="content has-text-justified">
+            We conduct extensive evaluations on ourbenchmark, including state-of-the-art open-source image models, video models, and cutting-edge proprietary models. 
+            The results that even state-of-the-art models struggle with fine-grained, instance-level understanding.
+          </div>
+          <!-- <details> -->
+            <!-- <summary><strong>Click here to expand the LMMs evaluation results on <span class="small-caps">Inst-IT</span> Bench</strong></summary> -->
+            <table style="table-layout: auto; text-align: center; border-top: 2px solid rgb(219, 219, 219); border-bottom: 2px solid rgb(219, 219, 219); border-left: none; border-right: none; border-collapse: collapse;">
+              <caption> #IT indicates the number of training samples used during the instruction-tuning stage. N/A indicates that the number is unknown.</caption>
+              <thead style="background-color: #f2f2f2; ">
+                <tr>
+                  <th rowspan="2" style="text-align: center; vertical-align: middle;"><strong>Model</strong></th>
+                  <th rowspan="2" style="text-align: center; vertical-align: middle;"><strong>LLM</strong></th>
+                  <th rowspan="2" style="text-align: center; vertical-align: middle;"><strong>#IT</strong></th>
+                  <th colspan="2" style="text-align: center; vertical-align: middle;"><strong>Image</strong></th>
+                  <th colspan="2" style="text-align: center; vertical-align: middle;"><strong>Video</strong></th>
+                </tr>
+                <tr>
+                  <th style="text-align: center;">Open-Ended Q&A</th>
+                  <th style="text-align: center;">Multi-Choice Q&A</th>
+                  <th style="text-align: center;">Open-Ended Q&A</th>
+                  <th style="text-align: center;">Multi-Choice Q&A</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>Random Guess</b></td>
+                  <td>-</td>
+                  <td>N/A</td>
+                  <td>-</td>
+                  <td>25.0</td>
+                  <td>-</td>
+                  <td>25.0</td>
+                </tr>
+                <tr>
+                  <td><b><a href="https://platform.openai.com/docs/models#gpt-4o" target="_blank" style="color: black;">GPT-4o</a></b></td>
+                  <td>-</td>
+                  <td>N/A</td>
+                  <td>74.1</td>
+                  <td>84.8</td>
+                  <td>65.5</td>
+                  <td>81.0</td>
+                </tr>
+                <tr>
+                  <td><b><a href="https://ai.google.dev/gemini-api/docs?hl=en" target="_blank" style="color: black;">Gemini-1.5-flash</a></b></td>
+                  <td>-</td>
+                  <td>N/A</td>
+                  <td>65.3</td>
+                  <td>79.5</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td colspan="7" style="text-align:center; font-style:italic;">Open-source image models</td>
+                </tr>
+                <tr>
+                  <td><b><a href="https://llava-vl.github.io/" target="_blank" style="color: black;">LLaVA-1.5</a></b></td>
+                  <td>Vicuna-7B</td>
+                  <td>665K</td>
+                  <td>41.6</td>
+                  <td>32.1</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td><b><a href="https://github.com/WisconsinAIVision/ViP-LLaVA" target="_blank" style="color: black;">ViP-LLaVA</a></b></td>
+                  <td>Vicuna-7B</td>
+                  <td>~1.2M</td>
+                  <td>42.1</td>
+                  <td>29.2</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td><b><a href="https://github.com/zzxslp/SoM-LLaVA" target="_blank" style="color: black;">SoM-LLaVA</a></b></td>
+                  <td>Vicuna-7B</td>
+                  <td>695K</td>
+                  <td>45.1</td>
+                  <td>40.0</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td><b><a href="https://github.com/LLaVA-VL/LLaVA-NeXT" target="_blank" style="color: black;">LLaVA-Next</a></b></td>
+                  <td>Vicuna-7B</td>
+                  <td>765K</td>
+                  <td>46.0</td>
+                  <td>42.4</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td colspan="7" style="text-align:center; font-style:italic;">Open-source video models</td>
+                </tr>
+                <tr>
+                  <td><b><a href="https://github.com/LLaVA-VL/LLaVA-NeXT" target="_blank" style="color: black;">LLaVA-NeXT-Video</a></b></td>
+                  <td>Vicuna-7B</td>
+                  <td>860K</td>
+                  <td>46.5</td>
+                  <td>39.5</td>
+                  <td>25.8</td>
+                  <td>24.8</td>
+                </tr>
+                <tr>
+                  <td><b><a href="https://sharegpt4video.github.io/" target="_blank" style="color: black;">ShareGPT4Video</a></b></td>
+                  <td>Llama3-8B</td>
+                  <td>~1.0M</td>
+                  <td>43.2</td>
+                  <td>48.7</td>
+                  <td>27.8</td>
+                  <td>16.1</td>
+                </tr>
+                <tr>
+                  <td><b><a href="https://github.com/OpenBMB/MiniCPM-V" target="_blank" style="color: black;">MiniCPM-V 2.6</a></b></td>
+                  <td>Qwen2-7B</td>
+                  <td>~7.0M</td>
+                  <td>57.6</td>
+                  <td>66.8</td>
+                  <td>40.0</td>
+                  <td>45.2</td>
+                </tr>
+                <tr>
+                  <td><b><a href="https://llava-vl.github.io/blog/2024-08-05-llava-onevision/" target="_blank" style="color: black;">LLaVA-OV (SI)</a></b></td>
+                  <td>Qwen2-7B</td>
+                  <td>~7.2M</td>
+                  <td>60.3</td>
+                  <td>61.8</td>
+                  <td>31.4</td>
+                  <td>36.4</td>
+                </tr>
+                <tr>
+                  <td><b><a href="https://llava-vl.github.io/blog/2024-08-05-llava-onevision/" target="_blank" style="color: black;">LLaVA-OV</a></b></td>
+                  <td>Qwen2-7B</td>
+                  <td>~8.8M</td>
+                  <td>48.0</td>
+                  <td>71.7</td>
+                  <td>33.2</td>
+                  <td>45.6</td>
+                </tr>
+                <tr>
+                  <td><b><a href="https://llava-vl.github.io/blog/2024-09-30-llava-video/" target="_blank" style="color: black;">LLaVA-Video</a></b></td>
+                  <td>Qwen2-7B</td>
+                  <td>~7.4M</td>
+                  <td>45.1</td>
+                  <td>67.0</td>
+                  <td>34.1</td>
+                  <td>53.2</td>
+                </tr>
+                <tr>
+                  <td><b><a href="https://internvl.github.io/blog/2024-07-02-InternVL-2.0/" target="_blank" style="color: black;">InternVL2</a></b></td>
+                  <td>InternLM2.5-7B</td>
+                  <td>N/A</td>
+                  <td>58.6</td>
+                  <td>66.5</td>
+                  <td>39.8</td>
+                  <td>45.5</td>
+                </tr>
+                <tr>
+                  <td><b><a href="https://github.com/QwenLM/Qwen2-VL" target="_blank" style="color: black;">Qwen2-VL-Instruct</a></b></td>
+                  <td>Qwen2-7B</td>
+                  <td>N/A</td>
+                  <td>48.3</td>
+                  <td>64.9</td>
+                  <td>38.2</td>
+                  <td>59.4</td>
+                </tr>
+                <tr>
+                  <td><b><a href="https://github.com/QwenLM/Qwen2-VL" target="_blank" style="color: black;">Qwen2-VL-Instruct</a></b></td>
+                  <td>Qwen2-72B</td>
+                  <td>N/A</td>
+                  <td>55.5</td>
+                  <td>74.7</td>
+                  <td>45.5</td>
+                  <td>74.6</td>
+                </tr>
+                <tr>
+                  <td colspan="7" style="text-align:center; font-style:italic;">Our models</td>
+                </tr>
+                <tr style="background-color: rgb(237, 255, 240);">
+                  <td><b><a href="https://inst-it.github.io/" style="color: black;">LLaVA-Next-<span class="small-caps">Inst-IT</span></a></b></td>
+                  <td>Vicuna-7B</td>
+                  <td>920K</td>
+                  <td>68.6</td>
+                  <td>63.0</td>
+                  <td>49.3</td>
+                  <td>42.1</td>
+                </tr>
+                <tr style="background-color: rgb(237, 255, 240);">
+                  <td><b><a href="https://inst-it.github.io/" style="color: black;">LLaVA-Next-<span class="small-caps">Inst-IT</span></a></b></td>
+                  <td>Qwen2-7B</td>
+                  <td>920K</td>
+                  <td>67.9</td>
+                  <td>75.3</td>
+                  <td>45.7</td>
+                  <td>53.3</td>
+                </tr>
+              </tbody>
+            </table>
+          <!-- </details> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Dataset -->
+<div style="background-color: #f0f0f0; width: 100%; padding: 1em 0; text-align: center;">
+  <h2 class="title is-3">
+    <img src="images/dataset.png" style="width:1.2em; vertical-align: middle" alt="Logo"/>
+    <span class="mathvista" style="vertical-align: middle" id="dataset">Inst-IT Dataset: A Fine-grained Instruction Tuning Dataset<span>
+  </h2>
+</div>
+<section class="section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          We create a large-scale instruction tuning dataset, the <span class="small-caps">Inst-it</span> Dataset. To the best of our knowledge, this is the first dataset that provides fine-grained annotations centric on specific instances. 
+          <span class="small-caps">Inst-it</span> Dataset contains <b>21k videos</b> and <b>51k images</b> (we treat images as static, single-frame videos). On average, each video includes one video-level description, <b>7.3</b> frame-level annotations and <b>15.6</b> open-ended question-answer pairs. 
+          In total, <span class="small-caps">Inst-it</span> Dataset includes <b>21k</b> video-level descriptions, <b>207k</b> frame-level descriptions, and <b>335k</b> open-ended QA pairs. 
+        </div>
+        <!-- dataset examples -->
+        <h3 class="title is-4" id="dataset-example">Data Examples in <span class="small-caps">Inst-IT</span> Dataset</h3>
+        <div class="content has-text-justified">
+          In <span class="small-caps">Inst-it</span> Dataset, each video contains a series of fine-grained annotations, includes:
+          <ul>
+            <li><a href="#frame-ann">\(N\times\)Frame-level Annotations \(Y^f\)</a>: each encompassing descriptions of individual instances, the entire image, and the temporal changes.</li>
+            <li><a href="#video-ann">\(1\times\)Video-level Description \(Y^{vid}\)</a>: a comprehensive description of the entire video, organized in chronological order.</li>
+            <li><a href="#qa">\(M\times\)Open-Ended QA Pairs \(Y^{qa}\)</a>: each QA pair is focused on the instances that we are interested in.</li>
+          </ul>
+        </div>
+        <div class="content has-text-justified">
+          <!-- frame ann -->
+          <h5 style="text-align: center;" id="frame-ann">Frame-level annotations</h5>
+          <div class="scrollable-content">
+            <table border="1" cellpadding="5" cellspacing="0" style="font-size: small; table-layout: auto; border-top: none; border-bottom: none; border-left: none; border-right: none; border-collapse: collapse;">
+              <thead style="background-color: #f2f2f2; position: sticky; top: 0; z-index: 1;">
+                  <tr>
+                      <th style="width: 20%;">Frame</th>
+                      <th style="width: 25%;">Instance-level Captions</th>
+                      <th style="width: 30%;">Image-level Captions</th>
+                      <th style="width: 25%;">Temporal Differences</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td style="vertical-align: middle; text-align: center;">
+                        <a href="javascript:void(0);" onclick="openModal();currentSlide(1)">
+                          <img src="images/dataset/example1/1.jpg" alt="Frame 1" class="thumbnail">
+                          timestamp &lt;1&gt;
+                        </a>
+                      </td>
+                      <td style="text-align: left;">
+                          1: Wearing a light gray suit with a white shirt, standing indoors.<br>
+                          2: Wearing a sleeveless white lace dress, holding an object in the hand.<br>
+                          3: Wearing a dark floral-patterned dress with long wavy hair.
+                      </td>
+                      <td style="text-align: left;">
+                          [1] [2] [3] are standing closely together in an indoor setting. [1] is on the left side wearing a formal, light gray suit with a white shirt. [2], in the middle, is wearing a sleeveless white lace dress, holding something in their hand. [3] is on the right side in a dark floral-patterned dress with long, wavy hair. They appear to be in a room with wooden paneling and some framed art on the wall.
+                      </td>
+                      <td>null</td>
+                  </tr>
+                  <tr>
+                      <td style="vertical-align: middle; text-align: center;">
+                        <a href="javascript:void(0);" onclick="openModal();currentSlide(2)">
+                          <img src="images/dataset/example1/2.jpg" alt="Frame 2" class="thumbnail">
+                          timestamp &lt;2&gt;
+                        </a>
+                      </td>
+                      <td style="text-align: left;">
+                          1: A person wearing a gray suit with a white shirt, short hair.<br>
+                          2: A person in a white, sleeveless dress with long dark hair.<br>
+                          3: A person wearing a dark floral dress with long dark hair.<br>
+                          5: A person wearing red, partially visible in the background.<br>
+                          6: A small black cellphone held in a hand.
+                      </td>
+                      <td style="text-align: left;">
+                          The scene appears to be in an office setting with a wooden table at the foreground. [1] is standing to the left, facing [2], and appears to be holding [2]'s finger or hand. [2] stands slightly to the right, returning focus with [1]. [3] is to the right of [2], slightly in the background, smiling and looking forward. A bouquet of white flowers lies on the table near [2]. [5] is partially visible in the background on the right, seated and wearing red. [6] is a cellphone held by [5]. Background shows a wooden wall and a reflection in a window.
+                      </td>
+                      <td style="text-align: left;">
+                          [1] has moved closer to [2] and is now in contact with [2]'s hand. [2] has turned slightly towards [1] compared to the previous frame. [3] remains in a similar position, but the expression suggests more engagement with the scene. [5] and [6] have appeared in the frame; [5] is visible in the background holding [6]. The table with a bouquet of flowers is now visible, indicating a shift in camera angle slightly to include more of the right side of the room.
+                      </td>
+                  </tr>
+                  <tr>
+                      <td style="vertical-align: middle; text-align: center;">
+                        <a href="javascript:void(0);" onclick="openModal();currentSlide(3)">
+                          <img src="images/dataset/example1/3.jpg" alt="Frame 3" class="thumbnail">
+                          timestamp &lt;3&gt;
+                        </a>
+                      </td>
+                      <td style="text-align: left;">
+                          1: Wearing a grey suit, standing beside [2] and slightly turned towards them.<br>
+                          2: Wearing a white, sleeveless dress with floral textures. Holding a bouquet of white flowers.<br>
+                          3: Wearing a dark patterned dress, standing slightly behind [2].<br>
+                          4: Partially visible, wearing dark clothing, located at the edge of the left side of the frame.<br>
+                          5: Seated, wearing a red outfit. Holding a white object above their head, possibly obscuring their face.
+                      </td>
+                      <td style="text-align: left;">
+                          The scene shows [1] [2] [3] near a wooden conference table in a professional setting, possibly an office. [1] wears a grey suit and is standing to the left, engaged with [2] who is wearing a white dress and holding flowers. [3], who is in a patterned dress, stands closely behind [2]. The newly appeared [4] is seated to the far left, partially visible at the edge of the frame. [5] is seated on the right side, holding an object above their head, possibly obscuring their face. The room has wooden walls and a framed picture hanging on the wall.
+                      </td>
+                      <td style="text-align: left;">
+                          Object [5] has lifted an object above their head, possibly a piece of paper. Object [4] has appeared in the scene, seated on the left side of the frame, which was not visible earlier. The positions of objects [1], [2], and [3] remain unchanged, as does the background and setting of the room. Overall, no significant movement is noticed in terms of camera angle or position for objects [1] [2] [3].
+                      </td>
+                  </tr>
+                  <tr>
+                    <td style="vertical-align: middle; text-align: center;">
+                      <a href="javascript:void(0);" onclick="openModal();currentSlide(4)">
+                        <img src="images/dataset/example1/4.jpg" alt="Frame 4" class="thumbnail">
+                        timestamp &lt;4&gt;
+                      </a>
+                    </td>
+                      <td style="text-align: left;">
+                          1: Wearing a light gray suit jacket, white dress shirt, and dark pants.<br>
+                          2: Wearing a white dress with a lace overlay, fitted at the waist.<br>
+                          3: Wearing a patterned dress with a floral design, strapless.<br>
+                          4: Visible part of a person wearing a dark shirt, seated or standing near the table.
+                      </td>
+                      <td style="text-align: left;">
+                          The setting appears to be indoors, with [1] [2] and [3] standing together around a table with a bouquet of flowers on it. [1] is interacting with [2], who is at the center, and they are possibly holding hands or engaged in some form of exchange. [3] is standing beside [2] and looking on, slightly leaning towards her. The room has wooden walls and a large framed picture in the background. The setting suggests a formal or ceremonial atmosphere, possibly a wedding or an official gathering. The camera angle is focused on this group, highlighting their interaction.
+                      </td>
+                      <td style="text-align: left;">
+                          [1] has moved slightly closer to [2], and they appear to be holding hands or exchanging something. [5] is no longer visible in the frame, possibly due to a change in camera angle or positioning of the individuals.
+                      </td>
+                  </tr>
+                  <tr>
+                    <td style="vertical-align: middle; text-align: center;">
+                      <a href="javascript:void(0);" onclick="openModal();currentSlide(5)">
+                        <img src="images/dataset/example1/5.jpg" alt="Frame 5" class="thumbnail">
+                        timestamp &lt;5&gt;
+                      </a>
+                    </td>
+                      <td style="text-align: left;">
+                          1: An adult wearing a light gray suit with button details and a white shirt. The expression and stance suggest focus and engagement.<br>
+                          2: An adult in a white, lacy dress with thin straps. The person has long dark hair and appears to be smiling, holding hands with [1].<br>
+                          3: An adult wearing a multicolored, patterned dress. The person has long, wavy hair and is smiling while observing [1] and [2].
+                      </td>
+                      <td style="text-align: left;">
+                          The current frame captures a moment in an interior setting with [1] wearing a light gray suit, [2] in a white lace dress, and [3] in a patterned dress. [1] and [2] are engaged, with [1] facing [2] and holding their hand, suggesting an exchange, possibly a ring. [2] smiles, indicating a moment of happiness. [3] stands to the right, smiling and observing the interaction, detached but engaged with the scene. The background shows a wooden wall and framed picture, reflecting a formal environment possibly used for ceremonies. A bouquet of flowers rests on the table in front of the group.
+                      </td style="text-align: left;">
+                      <td>
+                          Between the previous and the current frame, [1] and [2] have shifted slightly closer, with [1] now directly holding [2]'s hand, indicating a progression in their interaction, possibly the continuation or conclusion of an exchange, such as the placing of a ring. [3] remains in a similar position but continues to observe [1] and [2], emphasizing their passive role in the interaction. There is no notable change in the background or environment.
+                      </td>
+                  </tr>
+                  <tr>
+                    <td style="vertical-align: middle; text-align: center;">
+                      <a href="javascript:void(0);" onclick="openModal();currentSlide(6)">
+                        <img src="images/dataset/example1/6.jpg" alt="Frame 6" class="thumbnail">
+                        timestamp &lt;6&gt;
+                      </a>
+                    </td>
+                      <td style="text-align: left;">
+                          1: [1] is wearing a grey suit with a white shirt, looking forward, standing upright and smiling slightly.<br>
+                          2: [2] is wearing a white sleeveless dress, with hair tied back, and is standing with a calm expression.<br>
+                          3: [3] is wearing a floral dress with an energetic expression, standing with arms slightly bent.
+                      </td>
+                      <td style="text-align: left;">
+                        The image depicts a formal setting with a group of three adults, [1], [2], and [3], standing closely together. The background features a wooden paneled wall and a framed picture. [1] and [2] are positioned in the center, both facing forward, suggesting they are the focus of the occasion. [1] is on the left, wearing a grey suit, and [2] is to the right of [1] in a white dress. They appear to be engaged in a ceremony or formal event. [3] is to the right of [2], wearing a floral dress, and displays a cheerful demeanor. The lighting is bright, illuminating their faces and creating a formal, celebratory atmosphere.
+                      </td style="text-align: left;">
+                      <td>
+                        Between the frames, there is a noticeable shift in the poses and expressions of [1] and [2]. In the current frame, [1] is now standing upright with a slight smile, while previously [1] was leaning towards [2], holding [2]'s hand, suggesting a shift from interaction to posing. [2], who was previously looking at [1], is now facing forward with a calm expression, indicating a change from an interactive pose to a more neutral one. Both [1] and [2] have adjusted their posture to face the camera more directly. [3] remains in similar positioning as before but has moved slightly closer to [2] and is displaying a more energetic expression, emphasizing the cheerful atmosphere. The objects on the table in the foreground, visible in the previous frame, are no longer the focal point, showing that the primary focus is now the individuals standing together.
+                      </td>
+                  </tr>
+                  <tr>
+                    <td style="vertical-align: middle; text-align: center;">
+                      <a href="javascript:void(0);" onclick="openModal();currentSlide(7)">
+                        <img src="images/dataset/example1/7.jpg" alt="Frame 7" class="thumbnail">
+                        timestamp &lt;7&gt;
+                      </a>
+                    </td>
+                      <td style="text-align: left;">
+                          1: [1] is dressed in a grey suit with a white shirt, looking formal and neat.<br>
+                          2: [2] is wearing a white, sleeveless dress with a lightly patterned texture.<br>
+                          4: [4] is dressed in a dark outfit, including a dark scarf or similar accessory.
+                      </td>
+                      <td style="text-align: left;">
+                        In the current frame, [1] is positioned in the center, wearing a grey suit and a white shirt. [2] is to the right of [1], dressed in a white sleeveless dress. [4] appears on the left side of the image, wearing a dark outfit, which includes a scarf, giving a formal look. The environment is a room with wooden walls, and a large map or blueprint hangs on the wall in the background. The lighting highlights the three individuals, [1] [2] [4], and the focus is on them standing in a formal setting. [1] and [2] appear to be closer together, engaged in the setting's activity, with [4] seeming to join or rejoin the group.
+                      </td style="text-align: left;">
+                      <td>
+                        [3] is no longer visible in the current frame. [4] has appeared, standing to the left side of [1] and [2]. [1] and [2] remain in similar positions as in the previous frame, but the group now includes [4].
+                      </td>
+                  </tr>
+                  <tr>
+                    <td style="vertical-align: middle; text-align: center;">
+                      <a href="javascript:void(0);" onclick="openModal();currentSlide(8)">
+                        <img src="images/dataset/example1/8.jpg" alt="Frame 8" class="thumbnail">
+                        timestamp &lt;8&gt;
+                      </a>
+                    </td>
+                      <td style="text-align: left;">
+                          1: Person in a gray suit with a white shirt underneath.<br>
+                          2: Person wearing a white dress with long dark hair.<br>
+                          3: Person with long hair wearing a patterned dress, standing in the background.
+                      </td>
+                      <td style="text-align: left;">
+                        The current frame shows a group of three individuals indoors, with [1] on the left in a gray suit and white shirt, facing slightly towards [2], who is dressed in a white dress with long dark hair. [2] is looking at [1], suggesting an interaction or communication between them. [3] is slightly behind [2] and smiling, indicating a positive mood. The environment appears to be an office or meeting room with a large map or artwork on the wall in the background and a wooden wall, suggesting a formal or semi-formal setting. The lighting is bright, coming from the windows in the background, creating a clear but slightly shadowed detail on the individuals.
+                      </td style="text-align: left;">
+                      <td>
+                        From the previous frame to the current one, [1] and [2] appear to have shifted slightly closer to each other, with [2]'s head turned towards [1] indicating interaction. [3] is now visible in the scene, having entered from the right, which suggests a new addition to the group. [4] from the previous frame is no longer visible, indicating they may have exited the frame or moved out of view. The overall composition suggests a change in group dynamics as [3] enters and [1] and [2] interact more closely.
+                      </td>
+                  </tr>
+                  <tr>
+                    <td style="vertical-align: middle; text-align: center;">
+                      <a href="javascript:void(0);" onclick="openModal();currentSlide(9)">
+                        <img src="images/dataset/example1/9.jpg" alt="Frame 9" class="thumbnail">
+                        timestamp &lt;9&gt;
+                      </a>
+                    </td>
+                      <td style="text-align: left;">
+                          1: Wearing a light gray suit with a white shirt, standing with arms relaxed at the sides.<br>
+                          2: Wearing a sleeveless white dress, with black hair visible, standing sideways.<br>
+                          3: Clapping hands, wearing a dark, sleeveless floral-patterned dress.<br>
+                          4: Visible hands clapping, appearing on the left side of the frame.
+                      </td>
+                      <td style="text-align: left;">
+                        In the current frame, [1] is standing next to [2], both are positioned near a wooden wall, with a large framed picture or window in the background. [2] is wearing a white dress and stands slightly leaning towards [1], who is dressed in a gray suit. [3] is to the right, wearing a patterned dress and clapping her hands. On the left side of the frame, [4]'s hands are visible, indicating a clapping gesture. The environment appears to be well-lit, possibly indicating a celebratory or formal gathering.
+                      </td style="text-align: left;">
+                      <td>
+                        [4] has appeared in the current frame, clapping, which was not present in the previous frame. [1] and [2] have slightly shifted positions, indicating a minor adjustment in posture. The lighting in the room appears brighter in the current frame.
+                      </td>
+                  </tr>
+                  <tr>
+                    <td style="vertical-align: middle; text-align: center;">
+                      <a href="javascript:void(0);" onclick="openModal();currentSlide(10)">
+                        <img src="images/dataset/example1/10.jpg" alt="Frame 10" class="thumbnail">
+                        timestamp &lt;10&gt;
+                      </a>
+                    </td>
+                      <td style="text-align: left;">
+                          1: [1] is wearing a grey suit with a white shirt. The person's expression is neutral.<br>
+                          2: [2] is wearing a white dress, has long dark hair, and is smiling.<br>
+                          3: [3] is wearing a dark patterned dress, has long dark hair, and is smiling.<br>
+                          4: [4] is partially visible, clapping hands, wearing a long sleeve.
+                      </td>
+                      <td style="text-align: left;">
+                        In the current frame, [1] stands on the left wearing a grey suit and appears slightly more composed than before. [2], next to [1], in a white dress, continues smiling, directed towards [1]. [3] stands behind [2] with a continuous smile and hands still positioned as if clapping, indicating a joyous or celebratory mood. [4] is partially visible on the edge, with both hands shown as if engaged in clapping. The background remains the same, with wall decor and a wooden frame, suggesting an indoor setting. The lighting is consistent, highlighting a positive atmosphere.
+                      </td style="text-align: left;">
+                      <td>
+                        Between the previous and current frames, [1] has shifted from smiling to a neutral expression. [2]'s expression remains unchanged, still smiling. [3] continues to smile, maintaining the same engagement level. [4] shows hands in clapping motion slightly more forward than before. The physical positions of all individuals are largely the same, with slight adjustments in posture, possibly due to motion between shots.
+                      </td>
+                  </tr>
+                  <tr>
+                    <td style="vertical-align: middle; text-align: center;">
+                      <a href="javascript:void(0);" onclick="openModal();currentSlide(11)">
+                        <img src="images/dataset/example1/11.jpg" alt="Frame 11" class="thumbnail">
+                        timestamp &lt;11&gt;
+                      </a>
+                    </td>
+                      <td style="text-align: left;">
+                          1: Individual in a grey suit with a light-colored shirt underneath.<br>
+                          2: Individual in a white dress with a flower in their hair.<br>
+                          3: Individual in a dark floral dress with bare shoulders.<br>
+                          4: Visible hand, partially in the frame, with a watch on the wrist.
+                      </td>
+                      <td style="text-align: left;">
+                        The current frame captures four adults in what appears to be an intimate celebration setting, inside a room with a wooden backdrop and a framed picture on the wall. [1] and [2] are the main focus, engaged in a kiss. Both are facing each other, with [1] in a grey suit and [2] in a white dress. [3] stands to the side, clapping, and appears joyous, indicating approval or celebration. The environment is that of a seemingly formal setting with elements suggesting a personal or official celebration. [4] is partially visible, with just a hand showing, suggesting a congratulatory gesture.
+                      </td style="text-align: left;">
+                      <td>
+                        Between the previous and current frames, [1] and [2] have moved from standing side by side to facing each other and kissing, indicating a change from a neutral to an intimate interaction. [3] continues to display a supportive gesture by clapping, suggesting this action started in the previous frame and continued into the current one. The position of [4] indicates movement from a neutral position to a congratulatory gesture, seen by the positioning of the arm and hand. The overall increase in physical interaction between [1] and [2] and the supportive gestures by [3] and [4] contribute to a more emotionally engaging scene in the current frame.
+                      </td>
+                  </tr>
+                  <tr>
+                    <td style="vertical-align: middle; text-align: center;">
+                      <a href="javascript:void(0);" onclick="openModal();currentSlide(12)">
+                        <img src="images/dataset/example1/12.jpg" alt="Frame 12" class="thumbnail">
+                        timestamp &lt;12&gt;
+                      </a>
+                    </td>
+                      <td style="text-align: left;">
+                          1: Adult wearing a light grey suit with a white shirt. Short dark hair, clean-shaven, and standing upright.<br>
+                          2: Adult in a white, sleeveless dress. Long dark hair pulled back. Appears to be smiling with eyes partially closed.<br>
+                          3: Adult in a dark floral dress with a sleeveless design. Long dark hair down and clapping.
+                      </td>
+                      <td style="text-align: left;">
+                        In the current frame, [1] and [2] stand close together in the center of the image. [1] is wearing a grey suit with a white shirt and appears to be speaking or smiling. [2], dressed in a white dress, is leaning slightly towards [1] with a content expression. [3] is on the right, wearing a dark floral dress and clapping, seemingly celebrating with [1] and [2]. The environment is indoors with a wooden wall and a large framed picture in the background. The overall mood is celebratory, suggesting an event or occasion has taken place.
+                      </td style="text-align: left;">
+                      <td>
+                        Compared to the previous frame, [1] and [2] were previously kissing, but now they are standing apart, with [2] leaning slightly towards [1]. [1] has shifted from facing [2] to facing slightly outward and appears to be speaking or smiling. [3] remains in the same position but continues clapping, indicating ongoing celebration. The celebratory mood persists, reflecting a continuation of the event captured in the previous frame.
+                      </td>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- video ann -->
+          <h5 style="text-align: center; margin-top: 5%;" id="video-ann">Video-level description</h5>
+          <div class="scrollable-content" style="font-size: small; margin-left: 2%; margin-right: 2%;  max-height: 30vh;">
+            "The video appears to document a formal or celebratory event indoors, possibly a ceremony such as a wedding or official gathering, occurring in a room with wooden paneling and art or framed pictures on the wall. At the beginning, during &lt;1&gt;, [1] is wearing a light gray suit and stands with [2] in a sleeveless white lace dress, and [3] in a dark floral-patterned dress. The three are close together, suggesting an intimate or focused setting. The progression between &lt;2&gt; and &lt;3&gt; involves subtle changes in posture and interaction. [1] moves closer to [2], appearing to hold hands or engage in an exchange, possibly involving a ring, as indicated by a bouquet of flowers. [3] remains supportive and smiling, while [5], in red, momentarily holds an object above their head, before disappearing from view by &lt;4&gt;.In frames &lt;5&gt; to &lt;7&gt;, [1] and [2] maintain a close interaction, suggestive of a significant moment such as an exchange of vows or rings. They are closely observed by [3], who stands smiling nearby, while [1] and [2] occasionally adjust their positions, facing each other initially and then turning outward, which may signal transitioning from an intimate moment to posing for a photo. By &lt;7&gt;, [4] joins, dressed in darker attire, emphasizing the formal setting as [3] is no longer visible.Through &lt;8&gt; and &lt;9&gt;, the group dynamics change slightly with the absence of [4] and [3] entering the scene again. [1] and [2] appear to engage in a warm interaction as [3] supports them, clapping, alongside visible hands of [4] indicating applause, marking a cheerful tone.Finally, during &lt;10&gt; to &lt;12&gt;, the focus shifts as [1] and [2] first engage in a kiss, underscoring an intimate conclusion to their ceremony. They later stand apart slightly at the center, with [1] smiling or speaking, and [2] leaning towards [1] suggestively content. Throughout, the consistent joyous mood is accentuated by [3]'s ongoing clapping and expression of joy, emphasizing shared celebration and approval from the audience captured."
+          </div>
+          <!-- QA -->
+          <h5 style="text-align: center; margin-top: 5%;" id="qa">Open-ended question answering</h5>
+          <div class="scrollable-content" style="max-height: 30vh;">
+            <table border="1" cellpadding="5" cellspacing="0" style="table-layout: auto; border-top: none; border-bottom: none; border-left: none; border-right: none; border-collapse: collapse; font-size: small;">
+              <thead style="background-color: #f2f2f2; position: sticky; top: 0; z-index: 1;">
+                <tr>
+                  <th style="text-align: center; width: 50%;">Question</th>
+                  <th style="text-align: center; width: 50%;">Answer</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>What change occurs with [1]'s expression between &lt;10&gt; and the previous frame?</td>
+                  <td>[1] changes from smiling to a neutral expression.</td>
+                </tr>
+                <tr>
+                  <td>What activity are [1] and [2] involved in at &lt;11&gt;?</td>
+                  <td>[1] and [2] are engaged in a kiss.</td>
+                </tr>
+                <tr>
+                  <td>What is the overall mood during &lt;11&gt; as suggested by [3]'s actions?</td>
+                  <td>A celebratory or joyous event.</td>
+                </tr>
+                <tr>
+                  <td>What interaction occurs between [1] and [2] at &lt;5&gt;?</td>
+                  <td>[1] holds [2]'s hand, suggesting an intimate gesture or exchange, likely a ring.</td>
+                </tr>
+                <tr>
+                  <td>Who joins [1] and [2] in the frame at &lt;7&gt;?</td>
+                  <td>[4] appears in the frame, joining [1] and [2].</td>
+                </tr>
+                <tr>
+                  <td>What changes in the group's composition between &lt;7&gt; and &lt;8&gt;?</td>
+                  <td>[3] reappears, and [4] is no longer visible.</td>
+                </tr>
+                <tr>
+                  <td>What common setting element is seen throughout the frames &lt;1&gt; to &lt;12&gt;?</td>
+                  <td>The scene is in an indoor setting with wooden paneling and framed art.</td>
+                </tr>
+                <tr>
+                  <td>What type of event is likely taking place based on the atmosphere in &lt;4&gt; and &lt;6&gt;?</td>
+                  <td>A formal event, possibly a wedding or official gathering.</td>
+                </tr>
+                <tr>
+                  <td>What new elements are introduced in the scene at &lt;2&gt;?</td>
+                  <td>[5] holds a cellphone in the background, partially visible.</td>
+                </tr>
+                <tr>
+                  <td>What is the mood and lighting like at &lt;6&gt;?</td>
+                  <td>The mood is formal and celebratory, with bright lighting enhancing this atmosphere.</td>
+                </tr>
+                <tr>
+                  <td>What new background element appears at &lt;7&gt;?</td>
+                  <td>There is a map or blueprint on the wall.</td>
+                </tr>
+                <tr>
+                  <td>What is notable about [5]'s actions at &lt;3&gt;?</td>
+                  <td>[5] is lifting an object above their head, possibly a piece of paper.</td>
+                </tr>
+                <tr>
+                  <td>What is the setting like in &lt;3&gt;?</td>
+                  <td>The group is gathered near a wooden conference table in a formal setting.</td>
+                </tr>
+                <tr>
+                  <td>How are [1] and [2] interacting at &lt;8&gt;?</td>
+                  <td>They are engaged in conversation or communication, indicated by body language and focus.</td>
+                </tr>
+                <tr>
+                  <td>What does [1]'s expression suggest at &lt;12&gt;?</td>
+                  <td>[1] speaks or smiles, suggesting engagement with [2] or others.</td>
+                </tr>
+                <tr>
+                  <td>What shift occurs in the focus of the camera between &lt;5&gt; and &lt;6&gt;?</td>
+                  <td>The camera focuses more on individuals standing together, reducing focus on the foreground objects.</td>
+                </tr>
+                <tr>
+                  <td>What are [3] and [4] doing at &lt;9&gt;?</td>
+                  <td>They are clapping their hands in celebration.</td>
+                </tr>
+                <tr>
+                  <td>What decorative element is visible at &lt;2&gt;?</td>
+                  <td>A bouquet of flowers lies on the table near [2].</td>
+                </tr>
+                <tr>
+                  <td>How has the posture of [1] and [2] changed by &lt;6&gt;?</td>
+                  <td>[1] and [2] face slightly outward, suggesting a pose for a photograph or audience.</td>
+                </tr>
+                <tr>
+                  <td>What overall physical change occurs between [1] and [2] from &lt;10&gt; to &lt;11&gt;?</td>
+                  <td>There's a noticeable increase in their physical interaction, enhancing emotional engagement.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Zoom in images -->
+        <div id="myModal" class="modal">
+          <span class="close" onclick="closeModal()">&times;</span>
+          <img class="modal-content" id="img01">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="background-color: #f0f0f0; width: 100%; padding: 1em 0; text-align: center;">
+  <h2 class="title is-3">
+    <img src="images/model.png" style="width:1.2em; vertical-align: middle" alt="Logo"/>
+    <span class="mathvista" style="vertical-align: middle" id="train">An Instance-enhanced Large Multimodal Model<span>
+  </h2>
+</div>
+<section class="section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          Based on the <span class="small-caps">Inst-IT</span> Dataset, we propose a continuous instruction-tuning recipe to effectively mix instance understanding datasets
+          with generic instruction-tuning data. By adding this small amount of data, the enhanced models demonstrate strong performance among various benchmarks as well as our <span class="small-caps">Inst-IT</span> Bench.
+        </div>
+        <div class="content has-text-centered">
+          <strong>Results on image benchmarks.</strong>
+          <br>
+          <br>
+          <img src="images/image_bench_results.png" style="width:50%; vertical-align: middle" alt="Image-results"/>
+        </div>
+        <div class="content has-text-centered">
+          <strong>Results on video benchmarks.</strong>
+          <br>
+          <br>
+          <img src="images/video_bench_results.png" style="width:60%; vertical-align: middle" alt="Video-results"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- BibTex -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3 has-text-centered">📃 BibTeX</h2>
+    <pre>
+      <code>
+        @article{peng2024boosting,
+          title={Boosting Instance Understanding via Explicit Visual Prompt Instruction Tuning},
+          author={Peng, Wujian and Meng, Lingchen and Chen, Yitong and Xie, Yiweng and Liu, Yang and Gui, Tao and Hang, Xu and Qiu, Xipeng and Wu, Zuxuan and Jiang, Yu-gang},
+          journal={arXiv preprint},
+          year={2024}
+        }
+      </code>
+    </pre>
+    <br>
+    <!-- clustrmaps -->
+    <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=cadefc&w=300&t=tt&d=rShlLIjFKlQH2e2wDP6s8pAGiaA9xc7TOPvvkXUdrvY&co=ffffff&ct=000000&cmo=fce38a&cmn=ff9494'></script>
+    <!-- google analytics -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-KG8M4HGV0Y');
+    </script>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="content has-text-centered">
+  </div>
+  <div class="columns is-centered">
+    <div class="column is-8">
+      <div class="content">
+        <p>
+          This website is adapted from <a href="https://nerfies.github.io/">Nerfies</a> and <a href="https://mathvista.github.io/">MathVista</a>, licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+          Commons Attribution-ShareAlike 4.0 International License</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
